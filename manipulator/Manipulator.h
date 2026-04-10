@@ -5,14 +5,10 @@
 
 class Manipulator {
   private:
-    String id;
-
     ServoMotor * servos;
 
   public:
-    Manipulator(String id_);
-
-    String getId() const;
+    Manipulator();
 
     void setPins(int * pins, int lenght);
     void setPositions(int * positions, int lenght);

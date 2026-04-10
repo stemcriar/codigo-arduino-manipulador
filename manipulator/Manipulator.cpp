@@ -1,6 +1,6 @@
 #include "Manipulator.h"
 
-Manipulator::Manipulator(String id_) : id(id_)
+Manipulator::Manipulator()
 {
   this->servos = new ServoMotor[5] 
   {
@@ -11,11 +11,6 @@ Manipulator::Manipulator(String id_) : id(id_)
         ServoMotor("Garra")
   };
 };
-
-String Manipulator::getId() const
-{
-  return this->id;
-}
 
 void Manipulator::setPins(int * pins, int lenght) 
 {
@@ -41,7 +36,7 @@ void Manipulator::online(int servo, int destiny)
   {
     this->servos[servo].rotate(destiny);
     
-    return NULL;
+    return; 
   }
 
   if (destiny == 0)
