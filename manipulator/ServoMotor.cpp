@@ -26,7 +26,7 @@ void ServoMotor::rotate(int destiny)
 
   while (this->servo.isMoving()) 
   {
-    Serial.println();
+    // Serial.println();
   }
 };
 
