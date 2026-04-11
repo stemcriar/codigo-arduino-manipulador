@@ -5,7 +5,7 @@
 #define LENGHT 5
 #define OPTION 9
 
-Serial_comm serial; 
+Serial_comm serial_comm; 
 
 Manipulator manipulator;
 Control control;
@@ -22,6 +22,7 @@ const long interval = 50;
 
 void setup() {
   Serial.begin(9600);
+  Serial.setTimeout(20);
   
   pinMode(A0, INPUT);
   pinMode(A1, INPUT);
@@ -31,9 +32,9 @@ void setup() {
   pinMode(OPTION, INPUT);
 
   if (digitalRead(OPTION) != LOW) {
-    serial.setHandshakeInterval(1000);
-    serial.setType("manipulador"); 
-    serial.waitHandshake("ARD", serial.getType(), "ESP", "OK");
+    serial_comm.setHandshakeInterval(1000);
+    serial_comm.setType("manipulador"); 
+    serial_comm.waitHandshake("ARD", serial_comm.getType(), "ESP", "OK");
   }
 
   manipulator.setPins(pins, LENGHT);
@@ -47,12 +48,12 @@ void loop()
   
   if (option != LOW) { // MODO ONLINE
     
-    serial.getJson();
+    serial_comm.getJson();
     
-    if (serial.jsonUpdateCheck()) 
+    if (serial_comm.jsonUpdateCheck()) 
     {
-      String origem = serial.from;
-      int angulo = serial.state.toInt();
+      String origem = serial_comm.from;
+      int angulo = serial_comm.state.toInt();
       int servoIndex = -1;
 
       if (origem == "value0") servoIndex = 0;
