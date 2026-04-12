@@ -61,16 +61,16 @@ void loop()
         int dirX = estado.substring(0, commaIndex).toInt();
         int dirY = estado.substring(commaIndex + 1).toInt();
 
-        if (origem == "joystickR") {
+        if (origem == "joystickL") {
           // Joystick R: Y -> Base (servo 0), X -> Braço (servo 1)
-          int newAngle0 = constrain(manipulator.getServoAngle(0) + (dirY * 2), 0, 180);
-          int newAngle1 = constrain(manipulator.getServoAngle(1) + (dirX * 2), 0, 180);
+          int newAngle0 = constrain(manipulator.getServoAngle(0) - (dirX * 3), 0, 180);
+          int newAngle1 = constrain(manipulator.getServoAngle(1) + (dirY * 3), 0, 180);
           manipulator.online(0, newAngle0);
           manipulator.online(1, newAngle1);
         } else {
           // Joystick L: Y -> Antebraço (servo 2), X -> Punho (servo 3)
-          int newAngle2 = constrain(manipulator.getServoAngle(2) + (dirY * 2), 0, 180);
-          int newAngle3 = constrain(manipulator.getServoAngle(3) + (dirX * 2), 0, 180);
+          int newAngle2 = constrain(manipulator.getServoAngle(2) - (dirY * 3), 0, 180);
+          int newAngle3 = constrain(manipulator.getServoAngle(3) - (dirX * 3), 0, 180);
           manipulator.online(2, newAngle2);
           manipulator.online(3, newAngle3);
         }
