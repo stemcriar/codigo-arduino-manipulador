@@ -49,6 +49,11 @@ void Manipulator::online(int servo, int destiny)
   }
 }
 
+int Manipulator::getServoAngle(int servo) 
+{
+  return this->servos[servo].getAngle();
+}
+
 void Manipulator::offline(int * positions) 
 {
   for (int i = 0; i < 4; i++)

@@ -53,22 +53,33 @@ void loop()
     if (serial_comm.jsonUpdateCheck()) 
     {
       String origem = serial_comm.from;
-      int angulo = serial_comm.state.toInt();
-      int servoIndex = -1;
+      String estado = serial_comm.state;
 
-      if (origem == "value0") servoIndex = 0;
-      else if (origem == "value1") servoIndex = 1;
-      else if (origem == "value2") servoIndex = 2;
-      else if (origem == "value3") servoIndex = 3;
+      if (origem == "joystickR" || origem == "joystickL") {
+        // Parse state "X,Y" — each is -1, 0, or 1
+        int commaIndex = estado.indexOf(',');
+        int dirX = estado.substring(0, commaIndex).toInt();
+        int dirY = estado.substring(commaIndex + 1).toInt();
+
+        if (origem == "joystickR") {
+          // Joystick R: Y -> Base (servo 0), X -> Braço (servo 1)
+          int newAngle0 = constrain(manipulator.getServoAngle(0) + (dirY * 2), 0, 180);
+          int newAngle1 = constrain(manipulator.getServoAngle(1) + (dirX * 2), 0, 180);
+          manipulator.online(0, newAngle0);
+          manipulator.online(1, newAngle1);
+        } else {
+          // Joystick L: Y -> Antebraço (servo 2), X -> Punho (servo 3)
+          int newAngle2 = constrain(manipulator.getServoAngle(2) + (dirY * 2), 0, 180);
+          int newAngle3 = constrain(manipulator.getServoAngle(3) + (dirX * 2), 0, 180);
+          manipulator.online(2, newAngle2);
+          manipulator.online(3, newAngle3);
+        }
+      }
       else if (origem == "effector") {
-        servoIndex = 4;
         static bool garraFechada = false;
         garraFechada = !garraFechada;
-        angulo = garraFechada ? 90 : 0; 
-      }
-
-      if (servoIndex != -1) {
-        manipulator.online(servoIndex, angulo);
+        int angulo = garraFechada ? 90 : 0;
+        manipulator.online(4, angulo);
       }
     }
   }

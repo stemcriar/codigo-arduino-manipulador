@@ -16,6 +16,8 @@ class Manipulator {
     void online(int servo, int destiny);
     void offline(int * positions);
 
+    int getServoAngle(int servo);
+
     ~Manipulator();
 
 };
