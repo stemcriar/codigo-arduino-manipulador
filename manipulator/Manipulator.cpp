@@ -53,7 +53,7 @@ void Manipulator::offline(int * positions)
 {
   for (int i = 0; i < 4; i++)
   {
-    int newAngle = this->servos[i].getAngle() + (positions[i] * 5);
+    int newAngle = this->servos[i].getAngle() + (positions[i] * 2);
     newAngle = constrain(newAngle, 0, 180);
 
     this->servos[i].rotate(newAngle);
