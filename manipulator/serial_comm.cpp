@@ -71,7 +71,8 @@ void Serial_comm::getJson() {
       this->jsonUpdated = true;
       
       this->from = doc["from"].as<String>();
-      this->state = doc["state"].as<String>();
+      this->state = doc["state"] | "";
+      this->angle = doc["angle"] | -1;
       
     }
     else {

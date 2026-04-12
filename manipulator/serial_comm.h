@@ -21,6 +21,7 @@ class Serial_comm{
 
     String from = "";
     String state = "";
+    int angle = -1;
     
     String serializedCurrentJson;
 
